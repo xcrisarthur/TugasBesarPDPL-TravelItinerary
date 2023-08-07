@@ -1,4 +1,5 @@
 package java.strategy;
 
-public class routeStrategy {
+interface RouteStrategy {
+    void planRoute();
 }

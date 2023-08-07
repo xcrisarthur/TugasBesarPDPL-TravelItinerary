@@ -1,4 +1,7 @@
 package java.strategy;
 
-public class historicalRoute {
+class HistoricalRoute implements RouteStrategy {
+    public void planRoute() {
+        System.out.println("Mengunjungi objek-objek bersejarah.");
+    }
 }

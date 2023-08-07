@@ -1,4 +1,7 @@
 package java.abstractFactory;
 
-public class Car {
+class Car implements Transport {
+    public void travel() {
+        System.out.println("Perjalanan menggunakan mobil.");
+    }
 }

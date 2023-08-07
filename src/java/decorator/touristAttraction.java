@@ -1,4 +1,6 @@
 package java.decorator;
 
-public class touristAttraction {
+interface TouristAttraction {
+    void visit();
 }
+

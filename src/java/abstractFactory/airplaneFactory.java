@@ -1,4 +1,7 @@
 package java.abstractFactory;
 
-public class airplaneFactory {
+class AirplaneFactory implements TransportFactory {
+    public Transport createTransport() {
+        return new Airplane();
+    }
 }

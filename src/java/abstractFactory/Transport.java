@@ -1,4 +1,5 @@
 package java.abstractFactory;
 
-public class Transport {
+interface Transport {
+    void travel();
 }

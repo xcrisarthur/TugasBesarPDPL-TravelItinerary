@@ -1,4 +1,7 @@
 package java.factory;
 
-public class Park {
+class Park implements TouristAttraction {
+    public void visit() {
+        System.out.println("Mengunjungi taman bermain.");
+    }
 }

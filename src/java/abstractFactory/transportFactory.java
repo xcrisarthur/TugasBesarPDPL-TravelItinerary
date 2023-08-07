@@ -1,4 +1,5 @@
 package java.abstractFactory;
 
-public class transportFactory {
+interface TransportFactory {
+    Transport createTransport();
 }

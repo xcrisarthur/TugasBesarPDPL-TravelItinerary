@@ -1,4 +1,7 @@
 package java.strategy;
 
-public class natureAndSportRoute {
+class NatureAndSportsRoute implements RouteStrategy {
+    public void planRoute() {
+        System.out.println("Menikmati alam dan kegiatan olahraga.");
+    }
 }
