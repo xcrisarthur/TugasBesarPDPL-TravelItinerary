@@ -1,9 +1,9 @@
 package java.decorator;
 
-abstract class AttractionDecorator implements TouristAttraction {
-    protected TouristAttraction attraction;
+abstract class attractionDecorator implements touristAttraction {
+    protected touristAttraction attraction;
 
-    public AttractionDecorator(TouristAttraction attraction) {
+    public attractionDecorator(touristAttraction attraction) {
         this.attraction = attraction;
     }
 

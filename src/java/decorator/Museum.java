@@ -1,6 +1,6 @@
 package java.decorator;
 
-class Museum implements TouristAttraction {
+class Museum implements touristAttraction {
     public void visit() {
         System.out.println("Mengunjungi museum.");
     }

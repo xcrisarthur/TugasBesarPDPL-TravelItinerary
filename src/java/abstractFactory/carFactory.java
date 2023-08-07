@@ -1,6 +1,6 @@
 package java.abstractFactory;
 
-class CarFactory implements TransportFactory {
+class carFactory implements transportFactory {
     public Transport createTransport() {
         return new Car();
     }

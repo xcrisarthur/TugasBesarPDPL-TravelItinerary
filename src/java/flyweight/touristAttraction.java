@@ -1,4 +1,5 @@
 package java.flyweight;
 
-public class touristAttraction {
+public interface TouristAttraction {
+    void visit();
 }

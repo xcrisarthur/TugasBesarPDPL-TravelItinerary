@@ -2,7 +2,7 @@ package java.observer;
 
 import java.util.Observable;
 
-public class TravelPlannerObservable extends Observable {
+public class travelPlannerObservable extends Observable {
     private RouteStrategy routeStrategy;
 
     public void setRouteStrategy(RouteStrategy strategy) {

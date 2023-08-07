@@ -1,6 +1,6 @@
 package java.strategy;
 
-class TravelPlanner {
+class travelPlanner {
     private RouteStrategy routeStrategy;
 
     public void setRouteStrategy(RouteStrategy strategy) {

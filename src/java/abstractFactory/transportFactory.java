@@ -1,5 +1,5 @@
 package java.abstractFactory;
 
-interface TransportFactory {
+interface transportFactory {
     Transport createTransport();
 }

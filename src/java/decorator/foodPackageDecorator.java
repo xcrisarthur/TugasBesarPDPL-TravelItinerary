@@ -1,7 +1,7 @@
 package java.decorator;
 
-class FoodPackageDecorator extends AttractionDecorator {
-    public FoodPackageDecorator(TouristAttraction attraction) {
+class foodPackageDecorator extends attractionDecorator {
+    public foodPackageDecorator(touristAttraction attraction) {
         super(attraction);
     }
 

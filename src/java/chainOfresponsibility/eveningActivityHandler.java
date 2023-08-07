@@ -1,5 +1,5 @@
 package java.chainOfresponsibility;
 
-interface EveningActivityHandler {
+interface eveningActivityHandler {
     void handleActivity(String activity);
 }

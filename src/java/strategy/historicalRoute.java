@@ -1,6 +1,6 @@
 package java.strategy;
 
-class HistoricalRoute implements RouteStrategy {
+class historicalRoute implements RouteStrategy {
     public void planRoute() {
         System.out.println("Mengunjungi objek-objek bersejarah.");
     }

@@ -1,6 +1,8 @@
 package java.factory;
 
-class AttractionFactory {
+import java.flyweight.TouristAttraction;
+
+class attractionFactory {
     public static TouristAttraction createAttraction(String type) {
         if (type.equalsIgnoreCase("museum")) {
             return new Museum();

@@ -1,5 +1,5 @@
 package java.strategy;
 
-interface RouteStrategy {
+interface routeStrategy {
     void planRoute();
 }

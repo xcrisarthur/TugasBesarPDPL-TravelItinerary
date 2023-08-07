@@ -1,9 +1,9 @@
 package java.chainOfresponsibility;
 
-class ConcertHandler implements EveningActivityHandler {
-    private EveningActivityHandler next;
+class concertHandler implements eveningActivityHandler {
+    private eveningActivityHandler next;
 
-    public void setNext(EveningActivityHandler next) {
+    public void setNext(eveningActivityHandler next) {
         this.next = next;
     }
 
