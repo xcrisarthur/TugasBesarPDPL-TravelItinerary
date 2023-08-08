@@ -1,5 +1,5 @@
-package adapter;
-
-public interface PaymentProcessorAdapter {
-    void processPayment(int amount);
-}
+//package adapter;
+//
+//public interface PaymentProcessorAdapter {
+//    void processPayment(int amount);
+//}
