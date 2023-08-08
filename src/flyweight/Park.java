@@ -7,7 +7,9 @@ public class Park implements TouristAttractionflyweight {
         this.name = name;
     }
 
+    @Override
     public void visit() {
         System.out.println("Mengunjungi taman " + name + ".");
     }
 }
+

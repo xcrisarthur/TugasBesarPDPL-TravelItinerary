@@ -1,21 +1,21 @@
 package chainofresponsibility;
 
 public class ShowHandler implements EveningActivityHandler {
-    private EveningActivityHandler next;
+    private EveningActivityHandler nextHandler;
 
-    public void setNext(EveningActivityHandler next) {
-        this.next = next;
+    @Override
+    public void setNext(EveningActivityHandler handler) {
+        nextHandler = handler;
     }
 
+    @Override
     public void handleActivity(String activity) {
         if (activity.equalsIgnoreCase("show")) {
             System.out.println("Menyaksikan pertunjukan.");
+        } else if (nextHandler != null) {
+            nextHandler.handleActivity(activity);
         } else {
-            if (next != null) {
-                next.handleActivity(activity);
-            } else {
-                System.out.println("Tidak ada kegiatan malam yang sesuai.");
-            }
+            System.out.println("Tidak ada aktivitas malam yang sesuai.");
         }
     }
 }

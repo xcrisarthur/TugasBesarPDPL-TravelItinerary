@@ -1,74 +1,98 @@
-import abstractfactory.Transport;
-import abstractfactory.TransportFactory;
-import abstractfactory.CarFactory;
-import abstractfactory.AirplaneFactory;
+import abstractfactory.*;
 
-import strategy.TravelPlanner;
-import strategy.HistoricalRoute;
-import strategy.NatureAndSportsRoute;
-
-import decorator.Museum;
-import decorator.TouristAttraction; // Hanya satu impor untuk TouristAttraction
-import decorator.TourGuideDecorator;
-import decorator.FoodPackageDecorator;
-
+import adapter.PaymentProcessorFactory;
+import decorator.*;
+import flyweight.ParkFactory;
+import strategy.*;
 import factory.Attraction;
 import factory.AttractionFactory;
-
 import chainofresponsibility.EveningActivityHandler;
 import chainofresponsibility.ShowHandler;
 import chainofresponsibility.ConcertHandler;
-
 import observer.TripObserver;
 import observer.TravelPlannerObservable;
-
-import flyweight.ParkFlyweightFactory;
 import flyweight.TouristAttractionflyweight;
-
 import singleton.ClosingActivity;
-
 import adapter.PaymentProcessor;
-import adapter.CashPaymentProcessor;
-import adapter.CreditCardPaymentProcessor;
-
 import facade.ShoppingFacade;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // ABSTRACT FACTORY PATTERN
-        TransportFactory carFactory = new CarFactory();
-        Transport car = carFactory.createTransport();
-        car.travel();
+        Scanner scanner = new Scanner(System.in);
 
-        TransportFactory airplaneFactory = new AirplaneFactory();
-        Transport airplane = airplaneFactory.createTransport();
-        airplane.travel();
+        System.out.println("Selamat datang di Aplikasi Perjalanan!");
+
+        TransportFactoryManager factoryManager = new TransportFactoryManager();
+        factoryManager.registerTransportFactory(1, new CarFactory());
+        factoryManager.registerTransportFactory(2, new AirplaneFactory());
+
+        System.out.println("Pilih moda transportasi: (1) Mobil (2) Pesawat");
+        int transportChoice = scanner.nextInt();
+
+        TransportFactory transportFactory = factoryManager.getTransportFactory(transportChoice);
+        if (transportFactory != null) {
+            Transport transport = transportFactory.createTransport();
+            System.out.println("Perjalanan dimulai...");
+            transport.travel();
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+        }
+
+        Transport transport = transportFactory.createTransport();
+        System.out.println("Perjalanan dimulai...");
+        transport.travel();
+
 
         // STRATEGY PATTERN
         TravelPlanner travelPlanner = new TravelPlanner();
 
-        travelPlanner.setRouteStrategy(new HistoricalRoute());
-        travelPlanner.planRoute();
+        System.out.println("Pilih rute perjalanan: (1) Bersejarah (2) Alam dan Olahraga");
+        int routeChoice = scanner.nextInt();
 
-        travelPlanner.setRouteStrategy(new NatureAndSportsRoute());
-        travelPlanner.planRoute();
+        RouteStrategy routeStrategy = RouteStrategyFactory.createRouteStrategy(routeChoice);
+        if (routeStrategy != null) {
+            travelPlanner.setRouteStrategy(routeStrategy);
+            System.out.println("Perencanaan rute perjalanan:");
+            travelPlanner.planRoute();
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            return;
+        }
 
         // DECORATOR PATTERN
-        TouristAttraction museum = new Museum();
-        TouristAttraction museumWithGuide = new TourGuideDecorator(museum);
-        TouristAttraction museumWithGuideAndFood = new FoodPackageDecorator(museumWithGuide);
-
+        System.out.println("Mengunjungi objek wisata:");
+        TouristAttractionBuilder attractionBuilder = new TouristAttractionBuilder();
+        TouristAttraction museum = attractionBuilder.build();
         museum.visit();
-        museumWithGuide.visit();
-        museumWithGuideAndFood.visit();
+
+        System.out.println("Ingin menggunakan pemandu wisata? (y/n)");
+        String useTourGuide = scanner.next();
+        if (useTourGuide.equalsIgnoreCase("y")) {
+            museum = attractionBuilder.withTourGuide(true).build();
+            museum.visit();
+        }
+
+        System.out.println("Ingin termasuk paket makanan? (y/n)");
+        String includeFoodPackage = scanner.next();
+        if (includeFoodPackage.equalsIgnoreCase("y")) {
+            museum = attractionBuilder.withFoodPackage(true).build();
+            museum.visit();
+        }
 
         // FACTORY PATTERN
-        AttractionFactory attractionFactory = new AttractionFactory();
-        Attraction park = attractionFactory.createAttraction("park");
-        Attraction museumAttraction = attractionFactory.createAttraction("museum");
+        System.out.println("Pilih objek wisata: (1) Taman Bermain (2) Museum");
+        int attractionChoice = scanner.nextInt();
 
-        park.visit();
-        museumAttraction.visit();
+        Attraction attraction = AttractionFactory.createAttraction(attractionChoice);
+        if (attraction != null) {
+            System.out.println("Mengunjungi objek wisata:");
+            attraction.visit();
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            return;
+        }
+
 
         // CHAIN OF RESPONSIBILITY PATTERN
         EveningActivityHandler eveningActivityHandler = new ShowHandler();
@@ -76,47 +100,86 @@ public class Main {
 
         eveningActivityHandler.setNext(concertHandler);
 
-        eveningActivityHandler.handleActivity("show");
-        eveningActivityHandler.handleActivity("concert");
-        eveningActivityHandler.handleActivity("movie"); // Default handler
+        System.out.println("Pilih aktivitas malam: (1) Pertunjukan (2) Konser (3) Kegiatan lain");
+        int eveningActivityChoice = scanner.nextInt();
+        if (eveningActivityChoice == 1) {
+            eveningActivityHandler.handleActivity("show");
+        } else if (eveningActivityChoice == 2) {
+            eveningActivityHandler.handleActivity("concert");
+        } else {
+            eveningActivityHandler.handleActivity("other");
+        }
 
         // OBSERVER PATTERN
         TripObserver tripObserver = new TripObserver();
         TravelPlannerObservable travelPlannerObservable = new TravelPlannerObservable();
 
         travelPlannerObservable.addObserver(tripObserver);
-        travelPlannerObservable.setRouteStrategy(new HistoricalRoute());
+
+        System.out.println("Pilih rute perjalanan untuk observer:");
+        System.out.println("1. Bersejarah");
+        System.out.println("2. Alam dan Olahraga");
+        System.out.println("3. Rute lain");
+        int observerRouteChoice = scanner.nextInt();
+
+        RouteStrategy routeStrategy1 = RouteStrategyFactory.createRouteStrategy(observerRouteChoice);
+        travelPlannerObservable.setRouteStrategy(routeStrategy1);
+
+        System.out.println("Perencanaan rute perjalanan untuk observer:");
         travelPlannerObservable.planRoute();
 
+
         // FLYWEIGHT PATTERN
-        ParkFlyweightFactory parkFactory = new ParkFlyweightFactory();
+        ParkFactory parkFactory = new ParkFactory();
 
-        TouristAttractionflyweight park1 = parkFactory.getPark("Park A");
-        park1.visit();
+        System.out.println("Pilih taman untuk dikunjungi: (1) Park A (2) Park B");
+        int parkChoice = scanner.nextInt();
+        if (parkChoice == 1) {
+            TouristAttractionflyweight park1 = parkFactory.getPark("Park A");
+            park1.visit();
+        } else if (parkChoice == 2) {
+            TouristAttractionflyweight park2 = parkFactory.getPark("Park B");
+            park2.visit();
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            return;
+        }
 
-        TouristAttractionflyweight park2 = parkFactory.getPark("Park A");
-        park2.visit(); // Park A object is reused, not created again
-
-        TouristAttractionflyweight park3 = parkFactory.getPark("Park B");
-        park3.visit();
 
         // SINGLETON PATTERN
         ClosingActivity closingActivity1 = ClosingActivity.getInstance();
         ClosingActivity closingActivity2 = ClosingActivity.getInstance();
 
-        System.out.println(closingActivity1 == closingActivity2); // Should be true, same instance
+        System.out.println("Apakah ClosingActivity1 sama dengan ClosingActivity2? " + (closingActivity1 == closingActivity2));
 
         // ADAPTER PATTERN
-        PaymentProcessor cashProcessor = new CashPaymentProcessor();
-        cashProcessor.pay(100);
+        System.out.println("Pilih metode pembayaran: (1) Uang tunai (2) Kartu kredit");
+        int paymentChoice = scanner.nextInt();
+        PaymentProcessor paymentProcessor = PaymentProcessorFactory.createPaymentProcessor(paymentChoice);
 
-        PaymentProcessor creditCardProcessor = new CreditCardPaymentProcessor();
-        creditCardProcessor.pay(200);
+        if (paymentProcessor != null) {
+            paymentProcessor.pay(200); // Ganti 200 dengan jumlah yang sesuai
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
+            return;
+        }
+
+
+        System.out.println("Masukkan jumlah pembayaran:");
+        int paymentAmount = scanner.nextInt();
+        paymentProcessor.pay(paymentAmount);
 
         // FACADE PATTERN
-        ShoppingFacade shoppingFacade = new ShoppingFacade();
-        shoppingFacade.buyClothes();
-        shoppingFacade.buySnacks();
-        shoppingFacade.buySouvenirs();
+        System.out.println("Ingin berbelanja? (y/n)");
+        String shopChoice = scanner.next();
+        if (shopChoice.equalsIgnoreCase("y")) {
+            ShoppingFacade shoppingFacade = new ShoppingFacade();
+            shoppingFacade.buyClothes();
+            shoppingFacade.buySnacks();
+            shoppingFacade.buySouvenirs();
+        }
+
+        System.out.println("Terima kasih telah menggunakan Aplikasi Perjalanan!");
+        scanner.close();
     }
 }
