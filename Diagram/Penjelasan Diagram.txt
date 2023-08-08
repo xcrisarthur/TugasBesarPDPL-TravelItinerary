@@ -1,0 +1,40 @@
+Abstract Factory
+
+AirplaneFactory dan CarFactory adalah implementasi faktori abstrak yang menghasilkan objek-objek dari keluarga transportasi yang berbeda (pesawat dan mobil). Ini memungkinkan untuk membuat transportasi baru atau mengganti implementasi transportasi tanpa harus merubah kode di tempat-tempat lain yang menggunakan transportasi.
+
+
+Decorator
+
+Pola desain "Decorator Pattern" diterapkan di sini karena menggunakan hierarki kelas yang terdiri dari objek-objek yang dapat didekorasi (seperti Museum) dan dekorator (seperti TourGuideDecorator dan FoodPackageDecorator) yang menambahkan perilaku tambahan pada objek-objek tersebut tanpa mengubah kelas asli.
+
+Facade 
+
+Pola desain "Facade Pattern" diterapkan di sini karena ShoppingFacade bertindak sebagai "fasad" yang menyediakan antarmuka yang lebih simpel dan terkoordinasi untuk berinteraksi dengan berbagai kelas toko yang kompleks.
+
+Chain of responsibility
+
+Pola desain "Chain of Responsibility" diterapkan di sini karena memiliki serangkaian objek EveningActivityHandler (ConcertHandler dan ShowHandler) yang bertindak sebagai handler untuk aktivitas malam. Setiap handler mengambil tindakan jika mereka dapat menanganinya, dan jika tidak, mereka meneruskan permintaan ke handler berikutnya dalam rantai.
+
+Strategy
+
+Pola desain "Strategy Pattern" diterapkan di sini karena Anda memiliki antarmuka RouteStrategy sebagai abstraksi umum untuk berbagai strategi perencanaan rute (HistoricalRoute dan NatureAndSportsRoute). Kelas TravelPlanner bertindak sebagai "konteks" yang dapat menggunakan berbagai strategi tanpa harus tahu detail implementasi masing-masing strategi. Dengan demikian, Anda dapat mengganti atau memilih strategi perencanaan rute sesuai kebutuhan tanpa perlu merubah konteks (TravelPlanner)
+
+Factory
+
+pola desain "Factory Pattern" diterapkan karena memiliki kelas AttractionFactory yang bertindak sebagai pusat pembuatan objek-objek atraksi. Dengan cara ini, kode yang menggunakan objek atraksi tidak perlu mengetahui detail pembuatan atau jenis objek mana yang diciptakan. Hal ini memungkinkan untuk penambahan jenis atraksi baru di masa depan tanpa harus mengubah kode di tempat-tempat yang menggunakan objek atraksi.
+
+Observer
+
+Pola desain "Observer Pattern" diterapkan di sini karena Anda memiliki kelas TravelPlannerObservable yang bertindak sebagai subjek yang diamati dan kelas TripObserver yang bertindak sebagai pengamat yang menerima pemberitahuan tentang perubahan rute. Ketika rute diubah pada objek TravelPlannerObservable, semua objek yang mengamati (seperti TripObserver) akan menerima pemberitahuan dan dapat merespons perubahan tersebut. 
+
+Flyweight
+
+Pola desain "Flyweight Pattern" diterapkan di sini karena Anda menggunakan pabrik (ParkFlyweightFactory) untuk mengelola objek-objek flyweight (Park). Ketika Anda ingin membuat objek Park dengan nama tertentu, pabrik akan memeriksa apakah objek Park dengan nama tersebut sudah ada dalam koleksi. Jika ya, objek yang ada akan digunakan kembali; jika tidak, objek baru akan diciptakan. Ini mengurangi penggunaan memori karena Anda tidak perlu membuat objek baru setiap kali, dan juga meningkatkan efisiensi karena objek-objek yang serupa dapat berbagi data yang sama.
+
+Singleton
+
+Pola desain "Singleton Pattern" diterapkan di sini karena ingin memastikan bahwa hanya ada satu instance dari kelas ClosingActivity dalam seluruh aplikasi. Singleton digunakan ketika Anda ingin menghindari pembuatan banyak instance yang mengonsumsi sumber daya, dan Anda ingin memastikan bahwa seluruh kode menggunakan instance yang sama untuk tujuan tertentu 
+
+Adapter
+
+menggunakan Adapter Pattern di sini karena Anda membuat adapter (CashPaymentProcessorAdapter dan CreditCardPaymentProcessorAdapter) yang mengubah antarmuka yang tidak sesuai (CashPaymentProcessor dan CreditCardPaymentProcessor) menjadi antarmuka yang diharapkan oleh klien (PaymentProcessorAdapter). Dengan cara ini, Anda memungkinkan klien untuk berinteraksi dengan objek pembayaran menggunakan antarmuka yang konsisten tanpa harus peduli dengan perbedaan implementasi di belakangnya.
